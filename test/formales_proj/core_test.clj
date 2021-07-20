@@ -54,3 +54,17 @@
   (testing "Prueba de funcion: buscar-coincidencias"
     (is (= '([X VAR 0] [X VAR 2]) (buscar-coincidencias '[nil () [CALL X] :sin-errores [[0 3] [[X VAR 0] [Y VAR 1] [A PROCEDURE 1] [X VAR 2] [Y VAR 3] [B PROCEDURE 2]]] 6 [[JMP ?] [JMP 4] [CAL 1] RET]])))
     ))
+
+(deftest aplicar-relacional-test
+  (testing "Prueba de funcion: aplicar-relacional"
+    (is (= '[] (aplicar-relacional > [])))
+    (is (= '[7] (aplicar-relacional > [7])))
+    (is (= '[1] (aplicar-relacional > [7 5])))
+    (is (= '[4 1] (aplicar-relacional > [4 7 5])))
+    (is (= '[4 0] (aplicar-relacional = [4 7 5])))
+    (is (= '[4 1] (aplicar-relacional not= [4 7 5])))
+    (is (= '[4 0] (aplicar-relacional < [4 7 5])))
+    (is (= '[4 1] (aplicar-relacional <= [4 6 6])))
+    (is (= '[a b c] (aplicar-relacional <= '[a b c])))
+))
+

@@ -840,7 +840,19 @@
 ; user=> (aplicar-relacional <= '[a b c])
 ; [a b c]
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defn aplicar-relacional [op pila])
+(defn aplicar-relacional [op pila] 
+  (if (< (count pila) 2) pila 
+      (let [pila-nueva (pop (pop pila)) second (last pila) first (last (pop pila))]
+         (if (and (number? first) (number? second))
+           (cond 
+             (= op >) (conj pila-nueva (get {false 0 true 1} (> first second)))
+             (= op =) (conj pila-nueva (get {false 0 true 1} (= first second)))
+             (= op not=) (conj pila-nueva (get {false 1 true 0} (= first second)))
+             (= op <) (conj pila-nueva (get {false 0 true 1} (< first second)))
+             (= op <=) (conj pila-nueva (get {false 0 true 1} (<= first second))))
+           pila))
+  )
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Recibe un vector con instrucciones de la RI y las imprime numeradas a partir de 0. Siempre retorna nil.
