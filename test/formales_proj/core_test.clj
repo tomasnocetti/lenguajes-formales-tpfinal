@@ -33,3 +33,11 @@
     (is (= false (cadena? "Hola")))
     (is (= false (cadena? "'Hola")))
     (is (= false (cadena? 'Hola)))))
+
+(deftest ya-declarado-localmente?-test
+  (testing "Prueba de la funcion: ya-declarado-localmente?"
+    (is (= false (ya-declarado-localmente? 'Y '[[0] []])))
+    (is (= true (ya-declarado-localmente? 'Y '[[0] [[X VAR 0] [Y VAR 1]]])))
+    (is (= false (ya-declarado-localmente? 'Z '[[0] [[X VAR 0] [Y VAR 1]]])))
+    (is (= false (ya-declarado-localmente? 'Y '[[0 3 5] [[X VAR 0] [Y VAR 1] [INICIAR PROCEDURE 1] [Y CONST 2] [ASIGNAR PROCEDURE 2]]])))
+    (is (= true (ya-declarado-localmente? 'Y '[[0 3 5] [[X VAR 0] [Y VAR 1] [INICIAR PROCEDURE 1] [Y CONST 2] [ASIGNAR PROCEDURE 2] [Y CONST 6]]])))))
