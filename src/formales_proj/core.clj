@@ -707,7 +707,7 @@
 ; true
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn ya-declarado-localmente? [ident context] 
-  (let [total-scope (last context), scope-index (last (first context)), scope (take (- (count total-scope) scope-index) (reverse total-scope))] 
+  (let [total-scope (last context), scope-index (last (first context)), scope (subvec total-scope scope-index)] 
     (->> scope 
          (filter (fn [x] (= (first x) ident)))
          (count)
