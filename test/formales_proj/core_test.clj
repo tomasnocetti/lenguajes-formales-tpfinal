@@ -57,6 +57,7 @@
 
 (deftest aplicar-relacional-test
   (testing "Prueba de funcion: aplicar-relacional"
+    (is (= 'nil (aplicar-relacional > nil)))
     (is (= '[] (aplicar-relacional > [])))
     (is (= '[7] (aplicar-relacional > [7])))
     (is (= '[1] (aplicar-relacional > [7 5])))
@@ -67,4 +68,18 @@
     (is (= '[4 1] (aplicar-relacional <= [4 6 6])))
     (is (= '[a b c] (aplicar-relacional <= '[a b c])))
 ))
+
+(deftest aplicar-aritmetico-test
+  (testing "Prueba de funcion: aplicar-aritmetico"
+    (is (= '[3] (aplicar-aritmetico + [1 2])))
+    (is (= '[1 3] (aplicar-aritmetico - [1 4 1])))
+    (is (= '[1 8] (aplicar-aritmetico * [1 2 4])))
+    (is (= '[1 0] (aplicar-aritmetico / [1 2 4])))
+    (is (= 'nil (aplicar-aritmetico + nil)))
+    (is (= '[] (aplicar-aritmetico + [])))
+    (is (= '[1] (aplicar-aritmetico + [1])))
+    (is (= '[1 2 4] (aplicar-aritmetico 'hola [1 2 4])))
+    (is (= '[1 2 4] (aplicar-aritmetico count [1 2 4])))
+    (is (= '[a b c] (aplicar-aritmetico + '[a b c])))
+  ))
 

@@ -818,7 +818,17 @@
 ; user=> (aplicar-aritmetico + '[a b c])
 ; [a b c]
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defn aplicar-aritmetico [op pila])
+(defn aplicar-aritmetico [op pila] 
+   (if (< (count pila) 2) pila
+       (let [pila-nueva (pop (pop pila)) second (last pila) first (last (pop pila))]
+         (if (and (number? first) (number? second))
+           (cond
+             (= op +) (conj pila-nueva (+ first second))
+             (= op -) (conj pila-nueva (- first second))
+             (= op *) (conj pila-nueva (* first second))
+             (= op /) (conj pila-nueva (quot first second))
+             :else pila)
+           pila ))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Recibe un operador relacional de Clojure y un vector. Si el vector tiene mas de un elemento y si los dos
