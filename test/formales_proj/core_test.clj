@@ -169,3 +169,9 @@
     (is (= ['- (list (symbol "(") 'X '* 2 '+ 1 (symbol ")") 'END (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=")] :error '[[0] [[X VAR 0]]] 1 []] (expresion ['- (list (symbol "(") 'X '* 2 '+ 1 (symbol ")") 'END (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=")] :error '[[0] [[X VAR 0]]] 1 []])))
     (is (= ['END (list (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=") '+ (symbol "(") 'X '* 2 '+ 1  (symbol ")")] :sin-errores '[[0] [[X VAR 0]]] 1 ['[PFM 0] '[PFI 2] 'MUL '[PFI 1] 'ADD]] (expresion ['+ (list (symbol "(") 'X '* 2 '+ 1 (symbol ")") 'END (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=")] :sin-errores '[[0] [[X VAR 0]]] 1 []])))
     (is (= ['END (list (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=") '- (symbol "(") 'X '* 2 '- 1  (symbol ")")] :sin-errores '[[0] [[X VAR 0]]] 1 ['[PFM 0] '[PFI 2] 'MUL '[PFI 1] 'SUB 'NEG]] (expresion ['- (list (symbol "(") 'X '* 2 '- 1 (symbol ")") 'END (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=")] :sin-errores '[[0] [[X VAR 0]]] 1 []])))))
+
+
+(deftest interpretar-test
+  (testing "Prueba de funcion: interpretar"
+    (is (= ['[1] 2 [] []] (interpretar '[[PFI 1] [POP 0] RHLT] '[0] [] [])))
+    ))

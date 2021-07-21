@@ -606,12 +606,16 @@
 ; JC : Saca un valor de la pila de datos y si es 0 incrementa el contador de programa (si no, reemplaza el contador de programa por la direccion que forma parte de la instruccion)
 ; CAL: Coloca en la pila de llamadas el valor del contador de programa incrementado en 1 y reemplaza el contador de programa por la direccion que forma parte de la instruccion
 ; RET: Saca una direccion de la pila de llamadas y la coloca en el contador de programa
+
+;(interpretar (bytecode res) (vec (repeat (prox-var res) 0)) 0 [] []))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn interpretar [cod mem cont-prg pila-dat pila-llam]
   (let [fetched (cod cont-prg)
-        opcode (if (symbol? fetched) fetched (first fetched))]
+        opcode (if (symbol? fetched) fetched (first fetched))
+        val (if (symbol? fetched) nil (last fetched))]
     (case opcode
+      RHLT [mem cont-prg pila-dat pila-llam]
       HLT nil
       IN (let [entr (try (Integer/parseInt (read-line)) (catch Exception e ""))]
            (if (integer? entr)
@@ -622,7 +626,9 @@
                 (recur cod mem (inc cont-prg) (vec (butlast pila-dat)) pila-llam))
             (do (print (apply str (butlast (rest (str (second fetched)))))) (flush)
                 (recur cod mem (inc cont-prg) pila-dat pila-llam)))
-      NL (do (prn) (recur cod mem (inc cont-prg) pila-dat pila-llam)))))
+      NL (do (prn) (recur cod mem (inc cont-prg) pila-dat pila-llam))
+      POP (recur cod (assoc mem val (last pila-dat)) (inc cont-prg) (pop pila-dat) pila-llam)
+      PFI (recur cod mem (inc cont-prg) (conj pila-dat val) pila-llam))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; LAS FUNCIONES QUE SIGUEN DEBERAN SER IMPLEMENTADAS PARA QUE ANDE EL INTERPRETE DE PL/0 
