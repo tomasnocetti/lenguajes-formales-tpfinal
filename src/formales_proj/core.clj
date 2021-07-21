@@ -656,10 +656,11 @@
 ; false
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn palabra-reservada? [x] 
-  (let [reser '#{"CONST" "VAR" "PROCEDURE" "CALL" "BEGIN" "END" "IF" "THEN" "WHILE" "DO" "ODD" "READLN" "WRITELN" "WRITE" "(" ")"}]
+  (let [reser '#{"CONST" "VAR" "PROCEDURE" "CALL" "BEGIN" "END" "IF" "THEN" "WHILE" "DO" "ODD" "READLN" "WRITELN" "WRITE" "(" ")" "." ";" "<>" "=" ">=" "<=" "+" "-" "*" "/"}]
     (contains? reser (str x))
   )
-)
+) 
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Recibe un dato y devuelve true si es un identificador valido de PL/0; si no, devuelve false. Por ejemplo:
@@ -1008,7 +1009,7 @@
         (= operador '>) (generar amb 'GT)
         (= operador '>=) (generar amb 'GTE)
         (= operador '=) (generar amb 'EQ)
-        (= operador 'not=) (generar amb 'NEQ)
+        (= operador '<>) (generar amb 'NEQ)
         (= operador '<) (generar amb 'LT)
         (= operador '<=) (generar amb 'LTE)
         :else amb)

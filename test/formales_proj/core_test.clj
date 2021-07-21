@@ -23,6 +23,16 @@
   (testing "Prueba de la funcion: identificador-test"
     (is (= false (identificador? (symbol "("))))
     (is (= false (identificador? (symbol ")"))))
+    (is (= false (identificador? (symbol "."))))
+    (is (= false (identificador? (symbol ";"))))
+    (is (= false (identificador? (symbol "<>"))))
+    (is (= false (identificador? (symbol "="))))
+    (is (= false (identificador? (symbol ">="))))
+    (is (= false (identificador? (symbol "<="))))
+    (is (= false (identificador? (symbol "+"))))
+    (is (= false (identificador? (symbol "-"))))
+    (is (= false (identificador? (symbol "*"))))
+    (is (= false (identificador? (symbol "/"))))
     (is (= false (identificador? 2)))
     (is (= true (identificador? 'V2)))
     (is (= true (identificador? "V2")))
@@ -128,7 +138,7 @@
     (is (= '[WRITELN (END .) [] :sin-errores [[0 3] []] 6 [[JMP ?] [JMP ?] [CAL 1] RET GT]] (generar-operador-relacional ['WRITELN (list 'END (symbol ".")) [] :sin-errores [[0 3] []] 6 '[[JMP ?] [JMP ?] [CAL 1] RET]] '>)))
     (is (= '[WRITELN (END .) [] :sin-errores [[0 3] []] 6 [[JMP ?] [JMP ?] [CAL 1] RET LTE]] (generar-operador-relacional ['WRITELN (list 'END (symbol ".")) [] :sin-errores [[0 3] []] 6 '[[JMP ?] [JMP ?] [CAL 1] RET]] '<=)))
     (is (= '[WRITELN (END .) [] :sin-errores [[0 3] []] 6 [[JMP ?] [JMP ?] [CAL 1] RET LT]] (generar-operador-relacional ['WRITELN (list 'END (symbol ".")) [] :sin-errores [[0 3] []] 6 '[[JMP ?] [JMP ?] [CAL 1] RET]] '<)))
-    (is (= '[WRITELN (END .) [] :sin-errores [[0 3] []] 6 [[JMP ?] [JMP ?] [CAL 1] RET NEQ]] (generar-operador-relacional ['WRITELN (list 'END (symbol ".")) [] :sin-errores [[0 3] []] 6 '[[JMP ?] [JMP ?] [CAL 1] RET]] 'not=)))
+    (is (= '[WRITELN (END .) [] :sin-errores [[0 3] []] 6 [[JMP ?] [JMP ?] [CAL 1] RET NEQ]] (generar-operador-relacional ['WRITELN (list 'END (symbol ".")) [] :sin-errores [[0 3] []] 6 '[[JMP ?] [JMP ?] [CAL 1] RET]] '<>)))
   ))
 
 (deftest procesar-unario-test
