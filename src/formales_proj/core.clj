@@ -981,12 +981,12 @@
 (defn generar-operador-relacional [amb operador] 
   (if (= (estado amb) :sin-errores)
       (cond
-        (= operador '>) (assoc amb 6 (conj (bytecode amb) 'GT))
-        (= operador '>=) (assoc amb 6 (conj (bytecode amb) 'GTE))
-        (= operador '=) (assoc amb 6 (conj (bytecode amb) 'EQ))
-        (= operador 'not=) (assoc amb 6 (conj (bytecode amb) 'NEQ))
-        (= operador '<) (assoc amb 6 (conj (bytecode amb) 'LT))
-        (= operador '<=) (assoc amb 6 (conj (bytecode amb) 'LTE))
+        (= operador '>) (generar amb 'GT)
+        (= operador '>=) (generar amb 'GTE)
+        (= operador '=) (generar amb 'EQ)
+        (= operador 'not=) (generar amb 'NEQ)
+        (= operador '<) (generar amb 'LT)
+        (= operador '<=) (generar amb 'LTE)
         :else amb)
     amb))
 
