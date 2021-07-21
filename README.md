@@ -4,7 +4,8 @@ FIXME: description
 
 ## Installation
 
-El codigo de fuente se encuentra dentro de 'src/formailes_proj'
+El codigo de fuente se encuentra dentro de 'src/formailes_proj'.
+Se usa un entorno de desarrollo con VSCode y Calva.
 ## Usage
 
 FIXME: explanation
