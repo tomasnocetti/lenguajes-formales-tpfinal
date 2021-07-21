@@ -173,5 +173,5 @@
 
 (deftest interpretar-test
   (testing "Prueba de funcion: interpretar"
-    (is (= ['[1] 2 [] []] (interpretar '[[PFI 1] [POP 0] RHLT] '[0] [] [])))
+    (is (= ['[1] 2 [] []] (interpretar '[[PFI 1] [POP 0] RHLT] '[0] 0 [] [])))
     ))
