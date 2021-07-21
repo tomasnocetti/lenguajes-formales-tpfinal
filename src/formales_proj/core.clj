@@ -656,7 +656,7 @@
 ; false
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn palabra-reservada? [x] 
-  (let [reser '#{"CONST" "VAR" "PROCEDURE" "CALL" "BEGIN" "END" "IF" "THEN" "WHILE" "DO" "ODD" "READLN" "WRITELN" "WRITE"}]
+  (let [reser '#{"CONST" "VAR" "PROCEDURE" "CALL" "BEGIN" "END" "IF" "THEN" "WHILE" "DO" "ODD" "READLN" "WRITELN" "WRITE" "(" ")"}]
     (contains? reser (str x))
   )
 )
@@ -825,7 +825,19 @@
 ; user=> (expresion ['- (list (symbol "(") 'X '* 2 '+ 1 (symbol ")") 'END (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=")] :sin-errores '[[0] [[X VAR 0]]] 1 []])
 ; [END (.) [VAR X ; BEGIN X := - ( X * 2 + 1 )] :sin-errores [[0] [[X VAR 0]]] 1 [[PFM 0] [PFI 2] MUL [PFI 1] ADD NEG]]
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defn expresion [amb])
+(defn expresion [amb]
+  (if (= (estado amb) :sin-errores)
+    (let [ini-bloque amb]
+      (-> amb
+          (procesar-signo-unario)
+          (termino)
+          (procesar-mas-terminos)
+          ((fn chequear [newenv]
+             (let [signo (simb-actual ini-bloque)]
+               (if (or (= signo '+) (= signo '-))
+                 (generar-signo newenv signo)
+                 newenv))))))
+     amb))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Recibe un operador aritmetico diadico de Clojure y un vector. Si el vector tiene mas de un elemento y si los dos

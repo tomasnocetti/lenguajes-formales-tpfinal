@@ -21,6 +21,8 @@
 
 (deftest identificador-test
   (testing "Prueba de la funcion: identificador-test"
+    (is (= false (identificador? (symbol "("))))
+    (is (= false (identificador? (symbol ")"))))
     (is (= false (identificador? 2)))
     (is (= true (identificador? 'V2)))
     (is (= true (identificador? "V2")))
@@ -151,3 +153,9 @@
     (is (= ['X (list '* 2 'END (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=")] :error '[[0] [[X VAR 0]]] 1 []] (termino ['X (list '* 2 'END (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=")] :error '[[0] [[X VAR 0]]] 1 []])))
     (is (= ['END (list (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=") 'X '* 2] :sin-errores '[[0] [[X VAR 0]]] 1 '[[PFM 0] [PFI 2] MUL]] (termino ['X (list '* 2 'END (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=")] :sin-errores '[[0] [[X VAR 0]]] 1 []])))
     ))
+
+(deftest expresion-test
+  (testing "Prueba de funcion: expresion"
+    (is (= ['- (list (symbol "(") 'X '* 2 '+ 1 (symbol ")") 'END (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=")] :error '[[0] [[X VAR 0]]] 1 []] (expresion ['- (list (symbol "(") 'X '* 2 '+ 1 (symbol ")") 'END (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=")] :error '[[0] [[X VAR 0]]] 1 []])))
+    (is (= ['END (list (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=") '+ (symbol "(") 'X '* 2 '+ 1  (symbol ")")] :sin-errores '[[0] [[X VAR 0]]] 1 ['[PFM 0] '[PFI 2] 'MUL '[PFI 1] 'ADD]] (expresion ['+ (list (symbol "(") 'X '* 2 '+ 1 (symbol ")") 'END (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=")] :sin-errores '[[0] [[X VAR 0]]] 1 []])))
+    (is (= ['END (list (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=") '- (symbol "(") 'X '* 2 '- 1  (symbol ")")] :sin-errores '[[0] [[X VAR 0]]] 1 ['[PFM 0] '[PFI 2] 'MUL '[PFI 1] 'SUB 'NEG]] (expresion ['- (list (symbol "(") 'X '* 2 '- 1 (symbol ")") 'END (symbol ".")) ['VAR 'X (symbol ";") 'BEGIN 'X (symbol ":=")] :sin-errores '[[0] [[X VAR 0]]] 1 []])))))
