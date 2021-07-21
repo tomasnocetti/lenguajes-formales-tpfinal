@@ -977,8 +977,18 @@
 ; [WRITELN (END .) [] :sin-errores [[0 3] []] 6 [[JMP ?] [JMP ?] [CAL 1] RET EQ]]
 ; user=> (generar-operador-relacional ['WRITELN (list 'END (symbol ".")) [] :sin-errores [[0 3] []] 6 '[[JMP ?] [JMP ?] [CAL 1] RET]] '>=)
 ; [WRITELN (END .) [] :sin-errores [[0 3] []] 6 [[JMP ?] [JMP ?] [CAL 1] RET GTE]]
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defn generar-operador-relacional [amb operador])
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+(defn generar-operador-relacional [amb operador] 
+  (if (= (estado amb) :sin-errores)
+      (cond
+        (= operador '>) (assoc amb 6 (conj (bytecode amb) 'GT))
+        (= operador '>=) (assoc amb 6 (conj (bytecode amb) 'GTE))
+        (= operador '=) (assoc amb 6 (conj (bytecode amb) 'EQ))
+        (= operador 'not=) (assoc amb 6 (conj (bytecode amb) 'NEQ))
+        (= operador '<) (assoc amb 6 (conj (bytecode amb) 'LT))
+        (= operador '<=) (assoc amb 6 (conj (bytecode amb) 'LTE))
+        :else amb)
+    amb))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Recibe un ambiente y un operador monadico de signo de PL/0. Si el estado no es :sin-errores o si el operador no es
