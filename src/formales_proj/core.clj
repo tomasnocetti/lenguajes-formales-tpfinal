@@ -647,7 +647,12 @@
       LTE (recur cod mem (inc cont-prg) (aplicar-relacional <= pila-dat) pila-llam)
 
       ODD (recur cod mem (inc cont-prg) (conj (pop pila-dat) (cast-bool (odd? (last pila-dat)))) pila-llam)
-      NEG (recur cod mem (inc cont-prg) (conj (pop pila-dat) (- (last pila-dat))) pila-llam))
+      NEG (recur cod mem (inc cont-prg) (conj (pop pila-dat) (- (last pila-dat))) pila-llam)
+
+      RET (recur cod mem (last pila-llam) pila-dat (pop pila-llam))
+      CAL (recur cod mem val pila-dat (conj pila-llam (inc cont-prg)))
+      JC (recur cod mem (if (= (last pila-dat) 0) (inc cont-prg) val) (pop pila-dat) pila-llam)
+      JMP (recur cod mem val pila-dat pila-llam))
       ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
